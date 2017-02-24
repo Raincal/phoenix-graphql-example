@@ -9,8 +9,10 @@ defmodule PhoenixGraphqlExample.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
+  pipeline :graphql do
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource
+    plug PhoenixGraphqlExample.Web.Context
   end
 
   scope "/", PhoenixGraphqlExample do
@@ -19,9 +21,13 @@ defmodule PhoenixGraphqlExample.Router do
     get "/", PageController, :index
   end
 
-  forward "/api", Absinthe.Plug,
-    schema: PhoenixGraphqlExample.Schema
-  
+  scope "/api" do
+    pipe_through :graphql
+
+    forward "/", Absinthe.Plug,
+      schema: PhoenixGraphqlExample.Schema
+  end
+
   forward "/graphiql", Absinthe.Plug.GraphiQL,
     schema: PhoenixGraphqlExample.Schema
 

@@ -19,7 +19,7 @@ defmodule PhoenixGraphqlExample.Mixfile do
   def application do
     [mod: {PhoenixGraphqlExample, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :absinthe, :absinthe_plug, :absinthe_ecto, :faker, :comeonin, :guardian]]
   end
 
   # Specifies which paths to compile per environment.
@@ -41,7 +41,9 @@ defmodule PhoenixGraphqlExample.Mixfile do
      {:absinthe, "~> 1.2.0"},
      {:absinthe_plug, "~> 1.1"},
      {:absinthe_ecto, git: "https://github.com/absinthe-graphql/absinthe_ecto.git"},
-     {:faker, "~> 0.7"}]
+     {:faker, "~> 0.7"},
+     {:comeonin, "~> 2.5"},
+     {:guardian, "~> 0.13.0"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
